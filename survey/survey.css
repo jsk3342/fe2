@@ -1,0 +1,41 @@
+/* 타입 셀렉터 */
+body,
+form,
+header,
+section,
+h1,
+h4,
+span,
+select {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  background-color: antiquewhite;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1px;
+}
+
+/* 해더 */
+.header {
+  background-color: white;
+  padding-top: 12px;
+  margin: 20px 30px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  position: relative;
+}
+
+.boder {
+  background-color: blue;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  height: 10px;
+  left: -1px;
+  top: -1px;
+  position: absolute;
+  width: 636px;
+}
