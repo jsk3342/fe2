@@ -41,6 +41,12 @@
         height: 400px;
         background-color: blue;
       }
+      .a + li {
+        background: red;
+      }
+      li + li + li {
+        font-size: 30px;
+      }
     </style>
   </head>
   <body>
@@ -62,5 +68,12 @@
     <div class="five">
       <div class="four"></div>
     </div>
+    <ul>
+      <li>Apple</li>
+      <li class="a">Mango</li>
+      <li class="a">Banana</li>
+      <li>Melon</li>
+      <li>Strawberry</li>
+    </ul>
   </body>
 </html>
