@@ -1,0 +1,16 @@
+@for $hojun from 1 through 5 {
+  .photo-box-#{$hojun} {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+  }
+}
+
+$color-palette: red green blue black;
+
+@each $color in $color-palette {
+  .color-circle-#{$color} {
+    background-color: $color;
+    width: 20px;
+  }
+}

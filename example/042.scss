@@ -1,0 +1,15 @@
+$number: 10px, 20px, 35px;
+
+@function pow($value) {
+  $value: $value * 2;
+  @return $value;
+}
+
+.box {
+  width: pow(10);
+  height: max(10px, 20px, 35px, 30px, 15px);
+}
+
+.box2 {
+  height: max($number);
+}
