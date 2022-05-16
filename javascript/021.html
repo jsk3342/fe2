@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .wrap {
+        width: 800px;
+        height: 800px;
+        margin: 50px auto;        
+      }
+
+      .cover {
+        padding-top: 60%;
+        background-color: black;
+      }
+
+      .wrap-btn {
+        display: flex;
+        justify-content: center;
+        gap: 100px;
+        margin: 100px 0;
+      }
+
+      .red {
+        background-color: red;
+      }
+
+      .blue {
+        background-color: dodgerblue;
+      }
+
+      .green {
+        background-color: green;
+      }
+
+    </style>
+</head>
+
+  <body>
+      <div class="wrap">
+        <div class="cover"></div>
+        <section class="wrap-btn">
+          <button class="btn" type="button">나 빨강</button>
+          <button class="btn" type="button">나 파랑</button>
+          <button class="btn" type="button">나 초록</button>
+        </section>
+      </div>
+      <script>
+        const box = document.querySelector(".cover");
+        const btn1 = document.querySelectorAll(".btn")[0];
+        const btn2 = document.querySelectorAll(".btn")[1];
+        const btn3 = document.querySelectorAll(".btn")[2];
+
+        btn1.addEventListener('click', function() {
+          box.classList.toggle("red");
+          console.log('나온다');
+        })
+        btn2.addEventListener('click', function() {
+          box.classList.toggle("blue");
+        })
+        btn3.addEventListener('click', function() {
+          box.classList.toggle("green");
+        })
+
+      </script>
+  </body>
+</html>
