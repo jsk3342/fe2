@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+      const 지수 = {
+        name : '김지수',
+        age : 31,
+        싸움횟수 : '100전 100승 0무 0패',
+      }
+
+      const crush = {
+        hit : 0,
+        doubleHit : function() {
+          this.hit++;
+        }
+      }
+
+      function User(name, age, fight) {
+        this.name = name,
+        this.age = age,
+        this.싸움횟수 = fight
+      }
+
+      User.prototype.자스박살횟수 = function(crush) {
+        console.log('박살 완료')
+      }
+
+      User.prototype.자스박살 = function(crush) {
+        crush.doubleHit();
+      }
+
+      User.prototype.crush = function() {
+          let hit = 0;
+          function doubleHit() {
+            this.hit++;
+      }}
+      
+      const 나야나 = new User('jisu', 31, '100전 100승 0무 0패')
+
+    </script>
+</body>
+</html>

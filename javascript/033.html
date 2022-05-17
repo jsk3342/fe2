@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+  <form action="">
+    <button type="submit" class="submit">제출</button>
+  </form>
+
+  <h1>나의 todo list</h1>
+  <p class="detail">1. 오늘 저녁에는 부대찌게를 끓여 먹겠다.<button class="button" type="button">삭제</button></p>
+  <p class="detail">2. 후식으로 슈팅스타를 먹겠다.<button class="button" type="button">삭제</button></p>
+  <p class="detail">3. 자기 전에 반드시 내일 아침 메뉴를 생각해두겠다.<button class="button" type="button">삭제</button></p>
+
+  <script>
+    const detail1 = document.querySelectorAll('.detail')[0];
+    const detail2 = document.querySelectorAll('.detail')[1];
+    const detail3 = document.querySelectorAll('.detail')[2];
+
+    const content = detail1.textContent
+
+    const btn1 = document.querySelectorAll('.button')[0];
+    const btn2 = document.querySelectorAll('.button')[1];
+    const btn3 = document.querySelectorAll('.button')[2];
+
+    detail1.addEventListener('click', () => {
+	    alert(content);
+	  });
+
+    btn1.addEventListener('click', () => {
+	    confirm('삭제할꺼?');
+      
+      event.stopPropagation();
+	  });
+  </script>
+</body>
+</html>
