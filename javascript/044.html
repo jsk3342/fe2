@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+      class Person {
+        constructor(name) {
+          this.name = name;
+        }
+
+        sayMyName() {
+          console.log(`${this.name}`)
+        }
+
+        User(name, age, fight) {
+          this.name = name,
+          this.age = age,
+          this.싸움횟수 = fight
+        }
+
+        jsCrush() {
+          let count = 0;
+          return count++;
+        }
+      }
+
+      const person1 = new Person('jisukim', 31, '100전 100승');
+
+      class Sausage {
+        constructor(source, inside) {
+          this.source = source,
+          this.inside = inside
+        }
+
+        taste() {
+          console.log(`${this.source}와 ${this.inside} 맛이 난다!`)
+        }
+
+      }
+
+      const mySausage = new Sausage('데리야끼', '한우');
+
+      class FiresSausage extends Sausage {
+        firesTaste() {
+          this.taste();
+          console.log(`불맛 추가요~`);
+        }
+      }
+
+      const mySausage1 = new FiresSausage('데리야끼', '한우');
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+      class Todo {
+        constructor(status, list) {
+          this.진행상태 = status,
+          this.목록 = [list]
+        } 
+
+        changeState(changeStatus) {
+          this.진행상태 = changeStatus;
+        }
+
+        addItem(add) {
+          this.목록 = this.목록 + add
+        }
+
+        getItem() {
+          console.log(`${this.목록} 할일 입니다.`)
+        }
+      }
+
+      const todaydo = new Todo('시작', '밥먹기')
+
+    </script>
+</body>
+</html>
+
