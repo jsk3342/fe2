@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      .pink {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-color: lightpink;
+      }
+    </style>
+</head>
+<body>
+    <div class="pink"></div>
+    <script>
+      (function() {
+        document.addEventListener("keydown", function(e) {
+          let key = e.keyCode;
+          let pink = document.querySelector('.pink');
+          let x = parseInt(pink.style.top || 0, 10);
+          let y = parseInt(pink.style.left || 0, 10);
+
+          if (key === 37 /* LEFT */) {
+            pink.style.left = x - 50 + "px";
+            console.log('되냐?')
+          }
+          if (key === 38 /* TOP */) {
+            pink.style.top = y - 50 + "px";
+            console.log('되냐?')
+          }
+          if (key === 39 /* RIGHT */) {
+            pink.style.left = x + 50 + "px";
+            console.log('되냐?')
+          }
+          if (key === 40 /* BOTTOM */) {
+            pink.style.top = y + 50 + "px";
+            console.log('되냐?')
+          }
+        })
+      })();
+
+    </script>
+</body>
+</html>
