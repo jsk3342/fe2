@@ -1022,3 +1022,787 @@ function 병합정렬(입력배열){
 }
 
 console.log(병합정렬(입력값))
+
+
+// 3.4 퀵정렬(best - O(nlog2n), worst - O(n**2))
+// 피봇값(pivot)을 기준으로 정렬(피봇값은 처음값, 중간값, 마지막 값)
+// 실무에서는 worst일 경우를 피하기 위해 피봇을 랜덤하게 주는 경우나, 피봇을 2개 사용하는 경우도 있음.
+
+let 입력값 = [66, 77, 54, 32, 10, 5, 11, 15];
+
+// step 1
+// 피봇값 : 66
+[54, 32, 10, 5, 11, 15] + [66] + [77]
+
+// step 2
+// 피봇값 : 54 (66과 77은 값이 한 개이기 때문에 더이상 재귀로 호출되지 않음.)
+[32, 10, 5, 11, 15] + [54] + [66] + [77]
+
+// step 3
+// 피봇값 : 32
+[10, 5, 11, 15] + [32] + [54] + [66] + [77]
+
+// step 4
+// 피봇값 : 10
+[5] + [10] + [11, 15] + [32] + [54] + [66] + [77]
+
+// step 5
+// 피봇값 : 11
+[5] + [10] + [11] + [15] + [32] + [54] + [66] + [77]
+
+
+let 입력값 = [66, 77, 54, 32, 10, 5, 11, 15];
+function 퀵정렬(입력배열) {
+    let 입력배열의길이 = 입력배열.length
+
+    if (입력배열의길이 <= 1) {
+        return 입력배열
+    }
+    
+    const 피벗값 = [입력배열.shift()]
+    const 그룹하나 = []
+    const 그룹둘 = []
+
+    for (let i in 입력배열) {
+        if (입력배열[i] < 피벗값) {
+            그룹하나.push(입력배열[i])
+        } else {
+            그룹둘.push(입력배열[i])
+        }
+    }
+
+    console.log(`그룹하나 : ${그룹하나}\n그룹둘 : ${그룹둘}\n피벗값 : ${피벗값}\n`);
+
+    return 퀵정렬(그룹하나).concat(피벗값, 퀵정렬(그룹둘))
+}
+
+console.log(퀵정렬(입력값))
+
+
+// 4. 페이지 교체 알고리즘
+// https://www.notion.so/paullabworkspace/db83d9c4bbe6410ea208e6dc2daff07e
+// 페이지 교체 알고리즘 : 메모리를 효율적으로 사용하기 위해서 어떤 데이터를 메모리에 적재할지 결정하는 알고리즘
+// FIFO(오래된 녀석이 가장 빨리 나간다)
+// 순서 : 0, 4, 6, 5, 4, 7, 8
+[]
+[0]
+[0, 4]
+[0, 4, 6]
+[4, 6, 5]
+[4, 6, 5] // 4가 hit
+[6, 5, 7]
+[5, 7, 8]
+// LRU(오랫동안 사용되지 않은 녀석이 삭제)
+// 순서 : 0, 4, 6, 5, 4, 7, 8
+[]
+[0]
+[0, 4]
+[0, 4, 6]
+[4, 6, 5]
+[6, 5, 4] // 4가 hit
+[5, 4, 7]
+[4, 7, 8]
+
+// 문제 : https://tech.kakao.com/2017/09/27/kakao-blind-recruitment-round-1/
+// 캐시 크기(cacheSize)와 도시이름 배열(cities)
+// cacheSize는 정수이며, 범위는 0 ≦ cacheSize ≦ 30
+// cities는 도시 이름으로 이뤄진 문자열 배열로, 최대 도시 수는 100,000개이다.
+// 각 도시 이름은 공백, 숫자, 특수문자 등이 없는 영문자로 구성되며, 대소문자 구분을 하지 않는다. 도시 이름은 최대 20자로 이루어져 있다.
+// LRU(Least Recently Used)를 사용한다.
+// hit일 경우 실행시간은 1이다.
+// miss일 경우 실행시간은 5이다.
+
+// 캐시크기 3
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA"]
+["","",""]
+
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA"]
+["Jeju","",""] // 5
+
+/////// stop //////
+
+
+
+
+// 캐시크기 3 - 총 27
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Seoul", "LA"]
+["Jeju","",""] //5
+
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Seoul", "LA"]
+["Jeju","Pangyo",""] //5
+
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Seoul", "LA"]
+["Jeju","Pangyo","Seoul"] //5
+
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Seoul", "LA"]
+["Pangyo","Seoul","NewYork"] //5
+
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Seoul", "LA"]
+["Seoul","NewYork", "LA"] //5
+
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Seoul", "LA"]
+["NewYork","LA","Seoul"] //1
+
+["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Seoul", "LA"]
+["NewYork","Seoul","LA"] //1
+
+//LRU
+// hit - 1
+// miss - 5
+["바나나", "체리", "한라봉", "자몽", "수박", "수박", "체리"]
+[바나나] // 5
+[바나나, 체리] // 5
+[바나나, 체리, 한라봉] // 5
+[체리, 한라봉, 자몽] // 5
+[한라봉, 자몽, 수박] // 5
+[한라봉, 자몽, 수박] // 1 - hit
+[자몽, 수박, 체리] // 5
+
+
+// FIFO 알고리즘(캐시:3)
+["바나나", "체리", "한라봉", "자몽", "수박", "수박", "체리"]
+[바나나] // 5
+[바나나, 체리] // 5
+[바나나, 체리, 한라봉] // 5
+[체리, 한라봉, 자몽] // 5
+[한라봉, 자몽, 수박] // 5 
+[한라봉, 자몽, 수박] // 1 - hit
+[자몽, 수박, 체리]  // 5
+
+
+
+// 5. 트리와 그래프
+// 5.1 트리
+// 트리의 기본형태
+// value
+// child - left
+// child - right
+
+const tree = {
+    root : {
+        value : 5,
+        left : {
+            value: 3,
+            left: {
+                value: 1,
+                left: null,
+                right: null
+            },
+            right: {
+                value: 4,
+                left: null,
+                right: null
+            },
+        },
+        right : {
+            value: 8,
+            left: {
+                value: 6,
+                left: null,
+                right: null
+            },
+            right: {
+                value: 9,
+                left: null,
+                right: null
+            },
+        },
+    }
+}
+
+// 55━70━77━80
+// │         └━ 75
+// │
+// └━30━37
+//       │
+//       25
+//       │
+//       21
+
+
+const tree = {
+    root : {
+        value : 55,
+        left : {
+            value: 30,
+            left: {
+                value: 25,
+                left: {
+                    value: 21,
+                    left: null,
+                    right: null,
+                },
+                right: null
+            },
+            right: {
+                value: 37,
+                left: null,
+                right: null
+            },
+        },
+        right : {
+            value: 70,
+            left: {
+                value: 75,
+                left: null,
+                right: null
+            },
+            right: {
+                value: 77,
+                left: null,
+                right: {
+                    value: 80,
+                    left: null,
+                    right: null,
+                }
+            },
+        },
+    }
+}
+
+tree.root.value
+// 55
+tree.root.right.value
+// 70
+tree.root.right.right.value
+// 77
+
+
+// object나 array(기존 자료형)로 tree나 linked list를 구현할 수 있는데 왜 class로 구현할까요?
+
+
+// 1. 더 lite한 모델을 만들기 위해
+// 2. 확장성
+// 3. OOP(Object-Oriented Programming, 객체 지향 프로그래밍)에 철학에 맞기 때문에
+
+
+const root = {
+    value: 55,
+    left: null,
+    right: null
+}
+
+let node1 = {value:99, left:null, right:null}
+let node2 = {value:53, left:null, right:null}
+let node3 = {value:37, left:null, right:null}
+let node4 = {value:54,  left:null, right:null}
+root.right = node1
+root.left = node2
+node2.left = node3
+node2.right = node4
+
+root.root
+// 55
+root.right.value
+// 99
+root.left.value
+// 53
+root.left.left.value
+// 37
+
+
+// step 1 노드 생성
+class Node {
+    constructor(data){
+        this.data = data
+        // this.child = [] // 2진트리가 아닌 트리가 됩니다. 저는 child를 많이 사용합니다.
+        this.left = null
+        this.right = null
+    }
+}
+
+노드1 = new Node(55)
+노드2 = new Node(99)
+노드3 = new Node(53)
+노드4 = new Node(37)
+노드5 = new Node(54)
+
+노드1.right = 노드2
+노드1.left = 노드3
+노드3.right = 노드5
+노드3.left = 노드4
+
+노드1.root
+// 55
+노드1.right.data
+// 99
+노드1.left.data
+// 53
+노드1.left.left.data
+// 37
+
+
+// step2
+class Node {
+    constructor(data){
+        this.data = data
+        // this.child = [] // 2진트리가 아닌 트리가 됩니다. 저는 child를 많이 사용합니다.
+        this.left = null
+        this.right = null
+    }
+}
+
+class Tree {
+    constructor(data){
+        let init = new Node(data)
+        this.root = init
+        this.데이터수 = 0
+    }
+
+    length(){
+        return this.데이터수
+    }
+    
+    insert(data){
+        let 새로운노드 = new Node(data)
+        let 순회용현재노드 = this.root
+
+        while(순회용현재노드) {
+            if (data === 순회용현재노드.data){
+                // 값이 같으면 추가시켜주지 않습니다.
+                return
+            }
+            if (data < 순회용현재노드.data){
+                // 들어온 데이터가 작은 경우 왼쪽에 붙여야 합니다!
+                // 해당 데이터 부분이 비어있으면 데이터를 넣고, 비어있지 않으면 계속 타고 내려가야 합니다.
+                if(!순회용현재노드.left){
+                    순회용현재노드.left = 새로운노드
+                    this.데이터수 += 1
+                    return
+                }
+                순회용현재노드 = 순회용현재노드.left
+            }
+            if (data > 순회용현재노드.data){
+                // 들어온 데이터가 큰 경우 오른쪽에 붙여야 합니다!
+                // 해당 데이터 부분이 비어있으면 데이터를 넣고, 비어있지 않으면 계속 타고 내려가야 합니다.
+                if(!순회용현재노드.right){
+                    순회용현재노드.right = 새로운노드
+                    this.데이터수 += 1
+                    return
+                }
+                순회용현재노드 = 순회용현재노드.right
+            }
+        }
+    }
+}
+
+let t = new Tree(5)
+t.insert(3);
+t.insert(8);
+t.insert(1);
+t.insert(4);
+t.insert(6);
+t.insert(9);
+
+t.root.data
+// 5
+t.root.left.data
+// 3
+t.root.right.right.data
+// 9
+t.root.right.left.data
+// 6
+
+
+
+
+
+// step3 트리의 순회
+class Node {
+    constructor(data){
+        this.data = data
+        // this.child = [] // 2진트리가 아닌 트리가 됩니다. 저는 child를 많이 사용합니다.
+        this.left = null
+        this.right = null
+    }
+}
+
+class Tree {
+    constructor(data){
+        let init = new Node(data)
+        this.root = init
+        this.데이터수 = 0
+    }
+
+    length(){
+        return this.데이터수
+    }
+    
+    insert(data){
+        let 새로운노드 = new Node(data)
+        let 순회용현재노드 = this.root
+
+        while(순회용현재노드) {
+            if (data === 순회용현재노드.data){
+                // 값이 같으면 추가시켜주지 않습니다.
+                return
+            }
+            if (data < 순회용현재노드.data){
+                // 들어온 데이터가 작은 경우 왼쪽에 붙여야 합니다!
+                // 해당 데이터 부분이 비어있으면 데이터를 넣고, 비어있지 않으면 계속 타고 내려가야 합니다.
+                if(!순회용현재노드.left){
+                    순회용현재노드.left = 새로운노드
+                    this.데이터수 += 1
+                    return
+                }
+                순회용현재노드 = 순회용현재노드.left
+            }
+            if (data > 순회용현재노드.data){
+                // 들어온 데이터가 큰 경우 오른쪽에 붙여야 합니다!
+                // 해당 데이터 부분이 비어있으면 데이터를 넣고, 비어있지 않으면 계속 타고 내려가야 합니다.
+                if(!순회용현재노드.right){
+                    순회용현재노드.right = 새로운노드
+                    this.데이터수 += 1
+                    return
+                }
+                순회용현재노드 = 순회용현재노드.right
+            }
+        }
+    }
+
+    //깊스너큐, 파선아실
+    DFS() {
+        // 깊이우선탐색, DFS(Depth First Search)
+        // Stack 이용!
+        let 결과값 = []
+        let 스택 = [this.root]
+
+        while (스택.length !== 0){
+            let current = 스택.pop()
+            if (current.right){
+                스택.push(current.right)
+            }
+            if (current.left){
+                스택.push(current.left)
+            }
+            결과값.push(current.data)
+        }
+        return 결과값
+    }
+
+    BFS() {
+        // 너비우선탐색, BFS(Breadth First Search)
+        // Queue 이용!
+        let 결과값 = []
+        let 스택 = [this.root]
+
+        while (스택.length !== 0){
+            let current = 스택.shift()
+            if (current.left){
+                스택.push(current.left)
+            }
+            if (current.right){
+                스택.push(current.right)
+            }
+            결과값.push(current.data)
+        }
+        return 결과값
+    }
+}
+
+let t = new Tree(5)
+t.insert(3);
+t.insert(8);
+t.insert(1);
+t.insert(4);
+t.insert(6);
+t.insert(9);
+
+t.root.data
+// 5
+t.root.left.data
+// 3
+t.root.right.right.data
+// 9
+t.root.right.left.data
+// 6
+
+
+// 목차(실전 코딩테스트 풀이)
+// 1. 18년도
+// https://programmers.co.kr/learn/courses/30/lessons/17681?language=javascript
+// 주제 : 2진법, 진법 연산, replace, or 연산
+
+
+// 0. 암호를 해독
+// 1. 지도는 한 변의 길이가 n인 정사각형 배열 형태로, 각 칸은 "공백"(" ") 또는 "벽"("#") 두 종류로 이루어져 있다.
+// 2. 전체 지도는 두 장의 지도를 겹쳐서
+// 2.1 하나라도 벽인 부분은 전체 지도에서도 벽
+// 2.2 두 공백인 부분은 전체 지도에서도 공백
+// -> or 연산입니다.
+// 3. 정수 배열로 암호화
+// 4. 벽 부분을 1, 공백 부분을 0으로 부호화
+// 매개변수	값
+// n	5
+// arr1	[9, 20, 28, 18, 11]
+// arr2	[30, 1, 21, 17, 28]
+// 출력	["#####","# # #", "### #", "# ##", "#####"]
+
+// 01001       10100
+// 11110       00001
+// -----       -----
+// 11111       10101
+// #####       # # #
+
+let x = 9
+x.toString()
+x.toString(2)
+x.toString(8)
+x.toString(16)
+
+parseInt(1010, 2)
+// 10
+parseInt(1001, 2)
+// 9
+parseInt(9, 2)
+
+
+let x = 9
+x.toString(2)
+x.toString(2).replace(/1/g, '#')
+x.toString(2).replace(/1/g, '#').replace(/0/g, ' ')
+
+
+(9 | 30).toString(2).replace(/1/g, '#').replace(/0/g, ' ')
+(20 | 1).toString(2).replace(/1/g, '#').replace(/0/g, ' ')
+
+
+// step 1
+n = 5
+arr1 = [9, 20, 28, 18, 11]
+arr2 = [30, 1, 21, 17, 28]
+
+function solution(n, arr1, arr2) {
+    result = []
+    for (let i = 0; i < n; i++) {
+        result.push((arr1[i] | arr2[i])
+            .toString(2)
+            .replace(/1/g, '#')
+            .replace(/0/g, ' '))    
+    }
+    return result
+}
+
+console.log(solution(n, arr1, arr2))
+
+
+// step 2
+// 유틸리티 코드 //
+
+const zip = (a, b) => a.map((value, index) => [value, b[index]])
+
+const fillZero = (n, s) => {
+    return '0'.repeat(n - s.length) + s
+}
+
+const fillSpace = (n, s) => {
+    return ' '.repeat(n - s.length) + s
+}
+
+//fillZero(5, '111')
+
+n = 5
+arr1 = [9, 20, 28, 18, 11]
+arr2 = [30, 1, 21, 17, 28]
+
+function solution(n, arr1, arr2) {
+    result = []
+    for (let i = 0; i < n; i++) {
+        result.push(fillSpace(n, (arr1[i] | arr2[i])
+            .toString(2)
+            .replace(/1/g, '#')
+            .replace(/0/g, ' ')))
+    }
+    return result
+}
+
+console.log(solution(n, arr1, arr2))
+
+
+// step 3
+
+n = 5
+arr1 = [9, 20, 28, 18, 11]
+arr2 = [30, 1, 21, 17, 28]
+
+function solution(n, arr1, arr2) {
+    const fillSpace = (n, s) => {
+        return ' '.repeat(n - s.length) + s
+    }
+    result = []
+    for (let i = 0; i < n; i++) {
+        result.push(fillSpace(n, (arr1[i] | arr2[i])
+            .toString(2)
+            .replace(/1/g, '#')
+            .replace(/0/g, ' ')))
+    }
+    return result
+}
+
+console.log(solution(n, arr1, arr2))
+
+
+// step 4 zip 사용
+n = 5
+arr1 = [9, 20, 28, 18, 11]
+arr2 = [30, 1, 21, 17, 28]
+
+function solution(n, arr1, arr2) {
+    const fillSpace = (n, s) => {
+        return ' '.repeat(n - s.length) + s
+    }
+    const zip = (a, b) => a.map((value, index) => [value, b[index]])
+
+    result = []
+    for (const [i, j] of zip(arr1, arr2)) {
+        result.push(fillSpace(n, (i | j)
+            .toString(2)
+            .replace(/1/g, '#')
+            .replace(/0/g, ' ')))
+    }
+    return result
+}
+
+console.log(solution(n, arr1, arr2))
+
+////
+// 다트 게임
+// https://tech.kakao.com/2017/09/27/kakao-blind-recruitment-round-1/
+// 문자열 파싱(Parsing)
+// 3번의 기회
+// 0점에서 10점
+// 보너스 - Single(S), Double(D), Triple(T) - 1제곱, 2제곱, 3제곱 (점수^1 , 점수^2 , 점수^3 )으로 계산
+// 옵션 - 스타상(*, 2배) , 아차상(#, 마이너스)
+// 1S - 2
+// 2D - 8
+// *3T - 27
+
+// 1D - 1
+// 2S# - -2
+// 10S - 10
+
+// step 1
+testcase = [
+    '1S2D*3T', // 37
+    '1D2S#10S', // 9
+    '1D2S0T' // 3
+]
+
+for (const i of testcase) {
+    //console.log(i)
+    console.log(solution(i))
+}
+
+function solution(dartResult){
+    let answer = []
+    let result = 0
+    let temp = 0
+
+    for (let i = 0; i < dartResult.length; i++) {
+        if (dartResult[i] >= 0 && dartResult[i] <= 9){
+            temp = parseInt(dartResult[i])
+        } else if(dartResult[i] == 'S'){
+            answer.push(temp)
+        } else if(dartResult[i] == 'D'){
+            answer.push(temp**2)
+        } else if(dartResult[i] == 'T'){
+            answer.push(temp**3)
+        }
+    }
+
+    return answer
+}
+
+
+
+
+// step 2, 예외처리 + 나머지 코드
+testcase = [
+    '1S2D*3T', // 37
+    '1D2S#10S', // 9
+    '1D2S0T' // 3
+]
+
+for (const i of testcase) {
+    //console.log(i)
+    console.log(solution(i))
+}
+
+function solution(dartResult){
+    let answer = []
+    let result = 0
+    let temp = 0
+
+    for (let i = 0; i < dartResult.length; i++) {
+        if (dartResult[i] >= 0 && dartResult[i] <= 9){
+            if(dartResult[i] == 1 && dartResult[i+1] == 0){
+                temp = 10
+                // continue
+                i++
+            } else {
+                temp = parseInt(dartResult[i])
+            }
+        } else if(dartResult[i] == 'S'){
+            answer.push(temp)
+        } else if(dartResult[i] == 'D'){
+            answer.push(temp**2)
+        } else if(dartResult[i] == 'T'){
+            answer.push(temp**3)
+        } else if(dartResult[i] == '*'){
+            answer[answer.length-1] *= 2
+            answer[answer.length-2] *= 2
+        } else if(dartResult[i] == '#'){
+            answer[answer.length-1] *= -1
+        }
+    }
+    for (const value of answer) {
+        result += value
+    }
+    return result
+}
+
+
+// '1S2D*3T'.match(/([0-9]|10)([SDT])([\*\#]?)/g)
+
+
+
+//////////
+// https://tech.kakao.com/2017/09/27/kakao-blind-recruitment-round-1/
+// 캐시문제
+// 키워드 : LRU 알고리즘, 페이지 교체 알고리즘
+// 3	["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA"]	50
+// 3	["Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul"]	21
+// 2	["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"]	60
+
+testcase = [
+    [3, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA"]],
+    [3, ["Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul"]],
+    [2, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"]]
+];
+
+for (const [cacheSize, cities] of testcase) {
+    console.log(solution(cacheSize, cities))
+}
+
+function solution(cacheSize, cities){
+    let time = 0
+    let cache = []
+    for (let i = 0; i < cities.length; i++) {
+        let city = cities[i].toLowerCase()
+        let index = cache.indexOf(city)
+        if(index !== -1){
+            //hit
+            cache.splice(index, 1)
+            cache.push(city)
+            time += 1
+        } else {
+            //miss
+            cache.push(city)
+            time += 5
+            if(cacheSize < cache.length){
+                cache.shift()
+            }
+        }
+    }
+    return time
+}
